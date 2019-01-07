@@ -17,5 +17,5 @@ public class Eksamens_Project {
     public static void main(String[] args) {
         // TODO code application logic here
     }
-    
+    //Request to give Gogthegog a set in the coucil
 }
