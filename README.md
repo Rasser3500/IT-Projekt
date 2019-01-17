@@ -1,1 +1,3 @@
 # EksamenProgramering
+# gameing
+# blessed
