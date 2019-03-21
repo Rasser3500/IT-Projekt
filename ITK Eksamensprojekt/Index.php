@@ -8,7 +8,7 @@ if ($conn->query($sql) === TRUE) {
     echo $conn->error."<br>";
 }
 
-$sql = "CREATE TABLE AventureDB.PlayerTable (
+$sql = "CREATE TABLE adventureDB.PlayerTable (
 PlayerID INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 PlayerName VARCHAR(60) NOT NULL,
 Lvl INT(2) NOT NULL,
@@ -23,7 +23,7 @@ if ($conn->query($sql) === TRUE) {
     echo $conn->error."<br>";
 }
 	
-$sql = "CREATE TABLE AventureDB.ContractTable (
+$sql = "CREATE TABLE adventureDB.ContractTable (
 ContractID INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 PlayerID INT(6),
 PartyID INT(6),
@@ -36,7 +36,7 @@ if ($conn->query($sql) === TRUE) {
     echo $conn->error."<br>";
 }
 	
-$sql = "CREATE TABLE AventureDB.PartyTable (
+$sql = "CREATE TABLE adventureDB.PartyTable (
 PartyID INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 PartyName VARCHAR(60) NOT NULL
 )";	
@@ -47,7 +47,7 @@ if ($conn->query($sql) === TRUE) {
     echo $conn->error."<br>";
 }
 
-$sql = "CREATE TABLE AventureDB.EncounterTable (
+$sql = "CREATE TABLE adventureDB.EncounterTable (
 EncounterID INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 EncounterName VARCHAR(60) NOT NULL
 )";	
@@ -58,7 +58,7 @@ if ($conn->query($sql) === TRUE) {
     echo $conn->error."<br>";
 }	
 	
-$sql = "CREATE TABLE AventureDB.EventTable (
+$sql = "CREATE TABLE adventureDB.EventTable (
 EventID INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 EncounterID INT(6) NOT NULL,
 MonsterID INT(6) NOT NULL,
@@ -71,7 +71,7 @@ if ($conn->query($sql) === TRUE) {
     echo $conn->error."<br>";
 }	
 
-$sql = "CREATE TABLE AventureDB.MonsterTable (
+$sql = "CREATE TABLE adventureDB.MonsterTable (
 MonsterID INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 MonsterName VARCHAR(60) NOT NULL,
 Size VARCHAR(20) NOT NULL,
