@@ -12,7 +12,6 @@ if ($conn->query($sql) === TRUE) {
 } else {
     echo "Error: " . $sql . "<br>" . $conn->error;
 }
- //meme
 $conn->close();
 ?>
 <a href="homePage.php"><button>Ok</button></a>
