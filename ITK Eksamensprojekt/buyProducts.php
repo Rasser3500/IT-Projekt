@@ -1,11 +1,11 @@
 <html>
-<?php
+<?php       
 include"Connect.php";
 
 $UserID = $_GET["UserID"];
 $ProductID = $_GET["ProductID"];
 $Amount = $_GET["Amount"];
-
+    
 $sql = "SELECT Balance FROM ProductDB.UserTable WHERE UserID='$UserID'";
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
@@ -30,8 +30,8 @@ if ($NewBalance >= 0) {
     echo "Error: " . $sql . "<br>" . $conn->error;
 }
   $sql = "UPDATE ProductDB.userTable SET Balance = '$NewBalance' WHERE UserID='$UserID'";
-  echo "transaction complete";
-}
+  echo "transaction complete"; 
+} 
 else {
   echo "Insufficient funds (just get more money LOL :4Head:)";
 }
@@ -43,6 +43,6 @@ if ($conn->query($sql) === TRUE) {
 $conn->close();
 ?>
 <form action="viewProducts.php">
-  <button type="submit" name="UserID" value="<?php echo $UserID; ?>">Back</button>
+  <button type="submit" name="UserID" value="<?php echo $UserID; ?>">Back</button> 
 </form>
 </html>

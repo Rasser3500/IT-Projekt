@@ -7,8 +7,8 @@ if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
         echo " Party:  " . $row["PartyName"]."<br>";
         ?>
-        <form action="viewPlayers.php">
-            <button type="submit" name="PartyID" value="<?php echo $row["PartyID"]; ?>">View Players</button>
+        <form action="viewMembers.php">
+            <button type="submit" name="PartyID" value="<?php echo $row["PartyID"]; ?>">View Members</button>
         </form>
         <form action="deleteParty.php"><button type="submit" name="PartyID" value="<?php echo $row["PartyID"]; ?>">Delete Party</button> </form><?php
     }

@@ -8,9 +8,9 @@ if ($conn->query($sql) === TRUE) {
     echo $conn->error."<br>";
 }
 
-$sql = "CREATE TABLE adventureDB.PlayerTable (
-PlayerID INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-PlayerName VARCHAR(60) NOT NULL,
+$sql = "CREATE TABLE adventureDB.CharacterTable (
+CharacterID INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+CharacterName VARCHAR(60) NOT NULL,
 Lvl INT(2) NOT NULL,
 EXP int(10),
 Class VARCHAR(20) NOT NULL,
@@ -18,16 +18,16 @@ Race VARCHAR(20) NOT NULL
 )";
 
 if ($conn->query($sql) === TRUE) {
-    echo "PlayerTable created "."<br>";
+    echo "CharacterTable created "."<br>";
 } else {
     echo $conn->error."<br>";
 }
 	
 $sql = "CREATE TABLE adventureDB.ContractTable (
 ContractID INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-PlayerID INT(6),
+CharacterID INT(6),
 PartyID INT(6),
-Enlisted BIT(1)
+Member BIT(1)
 )";
 
 if ($conn->query($sql) === TRUE) {

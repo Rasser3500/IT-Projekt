@@ -15,15 +15,15 @@ $result = $conn->query($sql);
 $MaxID = $result->fetch_assoc();
 $ProdID = [];
 for($i=1; $i<$MaxID["COUNT(ProductID)"]+1; $i++) {
-$y=0;
-$sql = "SELECT Amount FROM ProductDB.PurchaseTable WHERE UserID = '$UserID' AND ProductID = '$i'";
-$result = $conn->query($sql);
-if ($result->num_rows > 0) {
+    $y=0;
+    $sql = "SELECT Amount FROM ProductDB.PurchaseTable WHERE UserID = '$UserID' AND ProductID = '$i'";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
-    $y= $y+$row["Amount"];
+            $y= $y+$row["Amount"];
+        }
     }
-}
-$ProdID[$i][0]=$y;
+    $ProdID[$i][0]=$y;
 }
 for($i=1; $i<sizeof($ProdID)+1; $i++){
     $sql = "SELECT Name, Value FROM ProductDB.ProductTable WHERE ProductID = '$i'";
