@@ -2,12 +2,10 @@
 <?php
 include"Connect.php";
 
-$Name = $_GET["Name"];
-
-$sql = "INSERT INTO AdventureDB.PartyTable (PartyName) Value('$Name')";
-
+$PartyID = $_GET["PartyID"];
+$sql = "DELETE FROM AdventureDB.PartyTable WHERE PartyID='$PartyID'";
 if ($conn->query($sql) === TRUE) {
-    echo "New Party added successfully";
+    echo "record removal successfull"."<br>";
 } else {
     echo "Error: " . $sql . "<br>" . $conn->error;
 }

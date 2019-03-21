@@ -2,6 +2,6 @@
 <?php
 include"Connect.php";
 ?>
-<a href="veiwEncounters.php"><button>veiwEncounters</button></a>
-<a href="veiwParties.php"><button>veiwParties</button></a>
+<a href="viewEncounters.php"><button>veiwEncounters</button></a>
+<a href="viewParties.php"><button>veiwParties</button></a>
 </html>

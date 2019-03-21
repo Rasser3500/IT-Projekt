@@ -1,11 +1,11 @@
 <html>
 <?php
 include"Connect.php";
-$sql = "SELECT EncounterID, Name FROM EncounterDB.EncounterTable";
+$sql = "SELECT EncounterID, EncounterName FROM AdventureDB.EncounterTable";
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
-        echo " Encounter:  " . $row["Encounter"]."<br>";
+        echo " Encounter:  " . $row["EncounterName"]."<br>";
         ?>
         <form action="viewMonsters.php">
             <button type="submit" name="EncounterID" value="<?php echo $row["EncounterID"]; ?>">View Monsters</button>
@@ -16,5 +16,6 @@ if ($result->num_rows > 0) {
     echo "There are no Encounters" . "<br>";
 }
 ?>
-<a href="newEncounter.php"><button>New Encounter</button></a>
+<br><a href="newEncounter.php"><button>New Encounter</button></a><br>
+<br><a href="homePage.php"><button>Back</button></a>
 </html>
