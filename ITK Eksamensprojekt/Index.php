@@ -27,7 +27,7 @@ $sql = "CREATE TABLE AventureDB.ContractTable (
 ContractID INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 PlayerID INT(6),
 PartyID INT(6),
-Enlisted BOOLEAN()
+Enlisted BIT(1)
 )";
 
 if ($conn->query($sql) === TRUE) {
