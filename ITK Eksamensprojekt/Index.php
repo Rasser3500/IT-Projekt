@@ -14,7 +14,7 @@ PlayerName VARCHAR(60) NOT NULL,
 Lvl INT(2) NOT NULL,
 EXP int(10),
 Class VARCHAR(20) NOT NULL,
-Race VARCHAR(20) NOT NULL,
+Race VARCHAR(20) NOT NULL
 )";
 
 if ($conn->query($sql) === TRUE) {
@@ -27,6 +27,7 @@ $sql = "CREATE TABLE AventureDB.ContractTable (
 ContractID INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 PlayerID INT(6),
 PartyID INT(6),
+Enlisted BOOLEAN()
 )";
 
 if ($conn->query($sql) === TRUE) {
@@ -37,7 +38,7 @@ if ($conn->query($sql) === TRUE) {
 	
 $sql = "CREATE TABLE AventureDB.PartyTable (
 PartyID INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-PartyName VARCHAR(60) NOT NULL,
+PartyName VARCHAR(60) NOT NULL
 )";	
 	
 if ($conn->query($sql) === TRUE) {
@@ -48,7 +49,7 @@ if ($conn->query($sql) === TRUE) {
 
 $sql = "CREATE TABLE AventureDB.EncounterTable (
 EncounterID INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-EncounterName VARCHAR(60) NOT NULL,
+EncounterName VARCHAR(60) NOT NULL
 )";	
 	
 if ($conn->query($sql) === TRUE) {
@@ -61,7 +62,7 @@ $sql = "CREATE TABLE AventureDB.EventTable (
 EventID INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 EncounterID INT(6) NOT NULL,
 MonsterID INT(6) NOT NULL,
-Amount INT(6) NOT NULL,
+Amount INT(6) NOT NULL
 )";	
 	
 if ($conn->query($sql) === TRUE) {
@@ -76,7 +77,7 @@ MonsterName VARCHAR(60) NOT NULL,
 Size VARCHAR(20) NOT NULL,
 CR FLOAT(10) NOT NULL,
 Alignment VARCHAR(20) NOT NULL,
-Type VARCHAR(20) NOT NULL,
+Type VARCHAR(20) NOT NULL
 )";	
 	
 if ($conn->query($sql) === TRUE) {
