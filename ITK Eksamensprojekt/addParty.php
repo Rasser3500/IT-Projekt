@@ -2,12 +2,12 @@
 <?php
 include"Connect.php";
 
-$EncounterName = $_GET["EncounterName"];
+$PartyName = $_GET["PartyName"];
 
-$sql = "INSERT INTO AdventureDB.EncounterTable (EncounterName) Value('$EncounterName')";
+$sql = "INSERT INTO AdventureDB.PartyTable (PartyName) Value('$EncounterName')";
 
 if ($conn->query($sql) === TRUE) {
-    echo "New Encounter added successfully";
+    echo "New Party added successfully";
 } else {
     echo "Error: " . $sql . "<br>" . $conn->error;
 }

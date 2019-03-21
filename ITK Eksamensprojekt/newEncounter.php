@@ -4,16 +4,8 @@ include"Connect.php";
 ?>
 <form action="addEncounter.php">
     Name:<br>
-    <input type="text" name="Name" value="">
+    <input type="text" name="EncounterName" value="">
     <br>
-    Challenge Rateing:<br>
-    <input type="text" name="exp" value="">
-    <br>
-    Party Size and Lvl:<br>
-    <input type="text" name="Size" value="">
-    <input type="text" name="Lvl" value="">
-    <br>
-    <input type="submit" value="Send">
 </form>
-<a href="homePage.php"><button>Back</button></a>
+<a href="viewEncounters.php"><button>Back</button></a>
 </html>
