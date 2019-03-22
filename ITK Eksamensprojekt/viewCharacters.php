@@ -65,7 +65,7 @@ if ($boolean==false){echo "There are no Characters";}
 ?>
 <br>
 <form action="newCharacter.php">
-   <button type="submit" name="PartyID" value="<?php echo $PartyID; ?>">Create New Character</button>
+    <button type="submit" name="PartyID" value="<?php echo $PartyID; ?>">Create New Character</button>
 </form>
 <form action="viewMembers.php">
    <button type="submit" name="PartyID" value="<?php echo $PartyID; ?>">Back</button>

@@ -3,7 +3,7 @@
 include"Connect.php";
 $PartyID = $_GET["PartyID"];
 ?>
-<form action="addCharacter.php">
+<form action=" addCharacter.php">
     Name:<br>
     <input type="text" name="CharacterName" value="">
     <br>
@@ -20,5 +20,8 @@ $PartyID = $_GET["PartyID"];
     <input type="text" name="Race" value="">
     <br><br>
     <button type="submit" name="PartyID" value="<?php echo $PartyID; ?>">Create Character</button>
+</form>
+<form action="viewCharacters.php">
+    <button type="submit" name="PartyID" value="<?php echo $PartyID; ?>">Back</button>
 </form>
 </html>

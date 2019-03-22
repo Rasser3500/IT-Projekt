@@ -41,7 +41,7 @@ for($i=1; $i<sizeof($playID)+1; $i++){
     }
 }
 for($i=1; $i<sizeof($playID)+1; $i++) {
-    if($playID[$i][0] == 1){
+    if($playID[$i][0] != 0){
         echo $playID[$i][1]."<br>";
         echo " Lvl:".$playID[$i][3]. " ";
         echo $playID[$i][5]. " ";
@@ -62,6 +62,7 @@ for($i=1; $i<sizeof($playID)+1; $i++) {
 }
 if ($boolean==false){echo "There are no members";}
 ?>
+<br>
 <form action="viewCharacters.php">
     <button type="submit" name="PartyID" value="<?php echo $PartyID; ?>">Contract Characters</button>
 </form>
