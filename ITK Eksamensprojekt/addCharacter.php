@@ -1,14 +1,14 @@
 <html>
 <?php
-include"Connect.php";
-$PartyID = $_GET["PartyID"];
-$CharacterName = $_GET["CharacterName"];
+include"database.php";
+$conn=getConnection();
+$Name = $_GET["Name"];
 $EXP = $_GET["EXP"];
 $Lvl = $_GET["Lvl"];
 $Class = $_GET["Class"];
 $Race = $_GET["Race"];
 
-$sql = "INSERT INTO AdventureDB.CharacterTable (CharacterName, EXP, Lvl, Class, Race) Value('$CharacterName', '$EXP', '$Lvl', '$Class', '$Race')";
+$sql = "INSERT INTO AdventureDB.CharacterTable (Name, EXP, Lvl, Class, Race) Value('$Name', '$EXP', '$Lvl', '$Class', '$Race')";
 
 if ($conn->query($sql) === TRUE) {
     echo "New Character added successfully";
@@ -17,7 +17,5 @@ if ($conn->query($sql) === TRUE) {
 }
 $conn->close();
 ?>
-<form action="viewCharacters.php">
-    <button type="submit" name="PartyID" value="<?php echo $PartyID; ?>">Ok</button>
-</form>
+<a href="viewCharacters.php"><button>Ok</button></a>
 </html>

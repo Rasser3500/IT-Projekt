@@ -1,60 +1,27 @@
 <html>
 <?php
-include"Connect.php";
-$PartyID = $_GET["PartyID"];
-$sql = "SELECT PartyName FROM AdventureDB.PartyTable WHERE PartyID='$PartyID'";
-$result = $conn->query($sql);
-if ($result->num_rows > 0) {
-    while($row = $result->fetch_assoc()) {
-        echo "Members of ".$row["PartyName"]."<br><br>";
-    }
-}
-$sql = "SELECT COUNT(CharacterID) FROM AdventureDB.CharacterTable";
-$result = $conn->query($sql);
-$MaxID = $result->fetch_assoc();
-$playID = [];
-for($i=1; $i<$MaxID["COUNT(CharacterID)"]+1; $i++) {
-    $y=0;
-    $sql = "SELECT Member FROM AdventureDB.ContractTable WHERE PartyID = '$PartyID' AND CharacterID = '$i'";
-    $result = $conn->query($sql);
-    if ($result->num_rows > 0) {
-        while($row = $result->fetch_assoc()) {
-        if($row["Member"]==1){ $y=$y+1; }
-        else{ $y=$y-1; }
-    }
-}
-    $playID[$i][0]=$y;
-}
+include"database.php";
+$conn = getConnection();
+$PartyID=isset($_POST['PartyID'])?$_POST['PartyID']:$_SESSION['PartyID'];
+$_SESSION['PartyID']=$PartyID;
+$PartyName=getName($conn,$PartyID,"Party");
+echo "Members of ".$PartyName."<br><br>";
+$Info = getALLCharacterInfo($conn,$PartyID);
 $boolean = false;
-for($i=1; $i<sizeof($playID)+1; $i++){
-    $sql = "SELECT CharacterName, EXP, Lvl, Class, Race FROM AdventureDB.CharacterTable WHERE CharacterID = '$i'";
-    $result = $conn->query($sql);
-    if ($result->num_rows != 0) {
+for($i=1; $i<sizeof($Info)+1; $i++) {
+    if($Info[$i][0] != 0){
         $boolean = true;
-        while($row = $result->fetch_assoc()) {
-            $playID[$i][1]=$row["CharacterName"];
-            $playID[$i][2]=$row["EXP"];
-            $playID[$i][3]=$row["Lvl"];
-            $playID[$i][4]=$row["Class"];
-            $playID[$i][5]=$row["Race"];
-        }
-    }
-}
-for($i=1; $i<sizeof($playID)+1; $i++) {
-    if($playID[$i][0] != 0){
-        echo $playID[$i][1]."<br>";
-        echo " Lvl:".$playID[$i][3]. " ";
-        echo $playID[$i][5]. " ";
-        echo $playID[$i][4]. "<br>";
-        echo " EXP:" .$playID[$i][2]. "<br>";
+        echo $Info[$i][1]."<br>";
+        echo " Lvl:".$Info[$i][3]. " ";
+        echo $Info[$i][5]. " ";
+        echo $Info[$i][4]. "<br>";
+        echo " EXP:" .$Info[$i][2]. "<br>";
         ?>
-        <form action="contract.php">
-            <input type="Hidden" name="PartyID" value="<?php echo $PartyID ?>">
+        <form action="contract.php" method="post">
             <input type="Hidden" name="CharacterID" value="<?php echo $i ?>">
             <button type="submit" name="Member" value="0">Remove from Party</button>
         </form>
-        <form action="editCharacter.php">
-            <input type="Hidden" name="PartyID" value="<?php echo $PartyID ?>">
+        <form action="editCharacter.php" method="post">
             <button type="submit" name="CharacterID" value="<?php echo $i ?>">Edit Character</button>
         </form>
         <?php
@@ -63,8 +30,7 @@ for($i=1; $i<sizeof($playID)+1; $i++) {
 if ($boolean==false){echo "There are no members";}
 ?>
 <br>
-<form action="viewCharacters.php">
-    <button type="submit" name="PartyID" value="<?php echo $PartyID; ?>">Contract Characters</button>
-</form>
+<a href="viewCharacters.php"><button>Contract Characters</button></a>
+<br><br>
 <a href="viewParties.php"><button>Back</button></a>
 </html>

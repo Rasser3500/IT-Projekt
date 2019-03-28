@@ -1,11 +1,7 @@
 <html>
-<?php
-include"Connect.php";
-$PartyID = $_GET["PartyID"];
-?>
 <form action=" addCharacter.php">
     Name:<br>
-    <input type="text" name="CharacterName" value="">
+    <input type="text" name="Name" value="">
     <br>
     EXP:<br>
     <input type="text" name="EXP" value="">
@@ -19,9 +15,7 @@ $PartyID = $_GET["PartyID"];
     Race:<br>
     <input type="text" name="Race" value="">
     <br><br>
-    <button type="submit" name="PartyID" value="<?php echo $PartyID; ?>">Create Character</button>
+    <button type="submit">Create Character</button>
 </form>
-<form action="viewCharacters.php">
-    <button type="submit" name="PartyID" value="<?php echo $PartyID; ?>">Back</button>
-</form>
+<a href="viewCharacters.php"><button>Back</button></a>
 </html>
