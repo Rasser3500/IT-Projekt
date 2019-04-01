@@ -30,10 +30,7 @@ for($i=1; $i<sizeof($Info)+1; $i++) {
 if ($boolean==false){echo "There are no Characters";}
 ?>
 <br>
-<form action="newCharacter.php">
-    <button type="submit" name="PartyID" value="<?php echo $PartyID; ?>">Create New Character</button>
-</form>
-<form action="viewMembers.php">
-   <button type="submit" name="PartyID" value="<?php echo $PartyID; ?>">Back</button>
-</form>
+<a href="editCharacter.php"><button>Create New Character</button></a>
+<br><br>
+<a href="viewMembers.php"><button>Back</button></a>
 </html>

@@ -123,14 +123,14 @@ function getMax($conn,$Object,$Table){
     return $result->fetch_assoc(); 
 }
 function getALLCharacterInfo($conn,$PartyID){
-    $CharTotal=getMax($conn,"CharacterID","CharacterTable");
+    $CharTotal=getMax($conn,"CharacterID","CharacterTable")["COUNT(CharacterID)"];
     $CharInfo=[];
-    $CharInfo=getCharacterMembership($conn,$CharTotal,$PartyID,$CharInfo);
-    $CharInfo=getCharacterInfo($conn,$CharTotal,$CharInfo);
+    $CharInfo=getCharacterMembership($conn,1,$CharTotal,$PartyID,$CharInfo);
+    $CharInfo=getCharacterInfo($conn,1,$CharTotal,$CharInfo);
     return $CharInfo;
 }
-function getCharacterMembership($conn,$Max,$PartyID,$CharInfo){
-    for($i=1; $i<$Max["COUNT(CharacterID)"]+1; $i++) {
+function getCharacterMembership($conn,$Start,$Max,$PartyID,$CharInfo){
+    for($i=$Start; $i<$Max+1; $i++) {
         $y=0;
         $sql = "SELECT Member FROM AdventureDB.ContractTable WHERE PartyID = '$PartyID' AND CharacterID = '$i'";
         $result = $conn->query($sql);
@@ -144,8 +144,8 @@ function getCharacterMembership($conn,$Max,$PartyID,$CharInfo){
     }
     return $CharInfo;
 }
-function getCharacterInfo($conn,$Max,$CharInfo){
-    for($i=1; $i<$Max["COUNT(CharacterID)"]+1; $i++){
+function getCharacterInfo($conn,$Start,$Max,$CharInfo){
+    for($i=$Start; $i<$Max+1; $i++){
         $sql = "SELECT Name, EXP, Lvl, Class, Race FROM AdventureDB.CharacterTable WHERE CharacterID = '$i'";
         $result = $conn->query($sql);
         if ($result->num_rows != 0) {
@@ -159,5 +159,15 @@ function getCharacterInfo($conn,$Max,$CharInfo){
         }
     }
     return $CharInfo;
+}
+function updateCharacter($conn,$CharacterID,$Name,$EXP,$Lvl,$Class,$Race){
+    $sql = "UPDATE AdventureDB.CharacterTable SET Name = '$Name', EXP = '$EXP', Lvl = '$Lvl', Class = '$Class', Race = '$Race' WHERE CharacterID='$CharacterID'";
+    return $conn->query($sql);
+    $conn->close();
+}
+function createCharacter($conn,$Name,$EXP,$Lvl,$Class,$Race){
+    $sql = "INSERT INTO AdventureDB.CharacterTable (Name, EXP, Lvl, Class, Race) Value('$Name', '$EXP', '$Lvl', '$Class', '$Race')";
+    return $conn->query($sql);
+    $conn->close();
 }
 ?>
