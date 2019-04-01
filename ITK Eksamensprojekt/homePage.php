@@ -1,7 +1,4 @@
 <html>
-<?php
-include"Connect.php";
-?>
-<a href="viewEncounters.php"><button>veiwEncounters</button></a>
-<a href="viewParties.php"><button>veiwParties</button></a>
+<a href="viewEncounters.php"><button>Veiw Encounters</button></a>
+<a href="viewParties.php"><button>Veiw Parties</button></a>
 </html>

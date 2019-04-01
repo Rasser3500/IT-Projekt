@@ -1,37 +1,17 @@
 <html>
 <?php
-include"Connect.php";
-$PartyID = $_GET["PartyID"];
-$sql = "SELECT PartyName FROM AdventureDB.PartyTable WHERE PartyID='$PartyID'";
-$result = $conn->query($sql);
-if ($result->num_rows > 0) {
-    while($row = $result->fetch_assoc()) {
-        echo " Contract Characters to " . $row["PartyName"]."<br><br>";
-    }
-}
-
-$sql = "SELECT COUNT(CharacterID) FROM AdventureDB.CharacterTable";
-$result = $conn->query($sql);
-$MaxID = $result->fetch_assoc();
-$playID = [];
-for($i=1; $i<$MaxID["COUNT(CharacterID)"]+1; $i++) {
-    $y=0;
-    $sql = "SELECT Member FROM AdventureDB.ContractTable WHERE PartyID = '$PartyID' AND CharacterID = '$i'";
-    $result = $conn->query($sql);
-    if ($result->num_rows > 0) {
-        while($row = $result->fetch_assoc()) {
-        if($row["Member"]==1){ $y=$y+1; }
-        else{ $y=$y-1; }
-    }
-}
-    $playID[$i][0]=$y;
-}
+include"database.php";
+$conn = getConnection();
+$PartyID=$_SESSION['PartyID'];
+$_SESSION['PartyID']=$PartyID;
+$PartyName=getName($conn,$PartyID,"Party");
+echo "Contract Characters to ".$PartyName."<br><br>";
+$Info = getALLCharacterInfo($conn,$PartyID);
 $boolean = false;
-for($i=1; $i<$MaxID["COUNT(CharacterID)"]+1; $i++){
-    $sql = "SELECT CharacterName, EXP, Lvl, Class, Race FROM AdventureDB.CharacterTable WHERE CharacterID = '$i'";
-    $result = $conn->query($sql);
-    if ($result->num_rows != 0) {
+for($i=1; $i<sizeof($Info)+1; $i++) {
+    if($Info[$i][0] == 0){
         $boolean = true;
+<<<<<<< HEAD
         while($row = $result->fetch_assoc()) {
             $playID[$i][1]=$row["CharacterName"];
 			$playID[$i][2]=$row["Class"];
@@ -69,6 +49,19 @@ for($i=1; $i<sizeof($playID)+1; $i++) {
 		</td>
         <td><form action="editCharacter.php">
             <input type="Hidden" name="PartyID" value="<?php echo $PartyID ?>">
+=======
+        echo $Info[$i][1]."<br>";
+        echo " Lvl:".$Info[$i][3]. " ";
+        echo $Info[$i][5]. " ";
+        echo $Info[$i][4]. "<br>";
+        echo " EXP:" .$Info[$i][2]. "<br>";
+        ?>
+        <form action="contract.php" method="post">
+            <input type="Hidden" name="CharacterID" value="<?php echo $i ?>">
+            <button type="submit" name="Member" value="1">Add Character</button>
+        </form>
+        <form action="editCharacter.php" method="post">
+>>>>>>> IT-Projekt/master
             <button type="submit" name="CharacterID" value="<?php echo $i ?>">Edit Character</button>
         </form>
 		</td>
@@ -80,6 +73,7 @@ for($i=1; $i<sizeof($playID)+1; $i++) {
 		if ($boolean==false){echo "There are no Characters";}
 ?>
 <br>
+<<<<<<< HEAD
 <form action="newCharacter.php">
     <button type="submit" name="PartyID" value="<?php echo $PartyID; ?>">Create New Character</button>
 </form>
@@ -87,3 +81,9 @@ for($i=1; $i<sizeof($playID)+1; $i++) {
    <button type="submit" name="PartyID" value="<?php echo $PartyID; ?>">Back</button>
 </form>
 		</html>
+=======
+<a href="editCharacter.php"><button>Create New Character</button></a>
+<br><br>
+<a href="viewMembers.php"><button>Back</button></a>
+</html>
+>>>>>>> IT-Projekt/master

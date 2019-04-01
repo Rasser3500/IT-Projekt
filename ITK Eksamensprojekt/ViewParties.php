@@ -1,17 +1,22 @@
 <html>
 <?php
-include"Connect.php";
+include"database.php";
+$conn = getConnection();
+$_SESSION['PartyID']=0;
 echo "List of Parties<br><br>";
-$sql = "SELECT PartyID, PartyName FROM AdventureDB.PartyTable";
+$sql = "SELECT PartyID, Name FROM AdventureDB.PartyTable";
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
-        echo $row["PartyName"]."<br>";
+        echo $row["Name"]."<br>";
         ?>
-        <form action="viewMembers.php">
+        <form action="viewMembers.php" method="post">     
             <button type="submit" name="PartyID" value="<?php echo $row["PartyID"]; ?>">View Members</button>
         </form>
-        <form action="deleteParty.php"><button type="submit" name="PartyID" value="<?php echo $row["PartyID"]; ?>">Delete Party</button> </form><?php
+        <form action="deleteParty.php" method="post">
+            <button type="submit" name="PartyID" value="<?php echo $row["PartyID"]; ?>">Delete Party</button>
+        </form>
+        <?php
     }
 } else {
     echo "There are no Parties" . "<br>";
