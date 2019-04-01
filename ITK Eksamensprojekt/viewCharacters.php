@@ -34,34 +34,50 @@ for($i=1; $i<$MaxID["COUNT(CharacterID)"]+1; $i++){
         $boolean = true;
         while($row = $result->fetch_assoc()) {
             $playID[$i][1]=$row["CharacterName"];
-            $playID[$i][2]=$row["EXP"];
+			$playID[$i][2]=$row["Class"];
             $playID[$i][3]=$row["Lvl"];
-            $playID[$i][4]=$row["Class"];
+			$playID[$i][4]=$row["EXP"];
             $playID[$i][5]=$row["Race"];
         }
     }
 }
 for($i=1; $i<sizeof($playID)+1; $i++) {
     if($playID[$i][0] == 0){
-        echo $playID[$i][1]."<br>";
-        echo " Lvl:".$playID[$i][3]. " ";
-        echo $playID[$i][5]. " ";
-        echo $playID[$i][4]. "<br>";
-        echo " EXP:" .$playID[$i][2]. "<br>";
         ?>
-        <form action="contract.php">
+	<table style="background-color:#875f43;width:40%;table-layout:fixed" border="3">
+		<tr>
+			<th>Name</th>
+			<th>EXP</th>
+			<th>Lvl</th>
+			<th>Class</th>
+			<th>Race</th>
+		</tr>
+		<tr>
+			<td><?php echo $playID[$i][1];?></td>
+			<td><?php echo $playID[$i][2];?></td>
+			<td><?php echo $playID[$i][3];?></td>
+			<td><?php echo $playID[$i][4];?></td>
+			<td><?php echo $playID[$i][5];?></td>
+		</tr>
+		</table>
+	<table>
+        <td>	<form action="contract.php">
             <input type="Hidden" name="PartyID" value="<?php echo $PartyID ?>">
             <input type="Hidden" name="CharacterID" value="<?php echo $i ?>">
-            <button type="submit" name="Member" value="1">Add Character</button>
-        </form>
-        <form action="editCharacter.php">
+				<button type="submit" name="Member" value="1">Add Character</button>
+				</form>
+		</td>
+        <td><form action="editCharacter.php">
             <input type="Hidden" name="PartyID" value="<?php echo $PartyID ?>">
             <button type="submit" name="CharacterID" value="<?php echo $i ?>">Edit Character</button>
         </form>
-        <?php
+		</td>
+	</table>
+	<br>
+       <?php
     }
 }
-if ($boolean==false){echo "There are no Characters";}
+		if ($boolean==false){echo "There are no Characters";}
 ?>
 <br>
 <form action="newCharacter.php">
@@ -70,4 +86,4 @@ if ($boolean==false){echo "There are no Characters";}
 <form action="viewMembers.php">
    <button type="submit" name="PartyID" value="<?php echo $PartyID; ?>">Back</button>
 </form>
-</html>
+		</html>
