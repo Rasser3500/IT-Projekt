@@ -16,7 +16,5 @@ if ($CharacterID==0){
 
 
 ?>
-<form action="viewCharacters.php">
-    <button type="submit" name="PartyID" value="<?php echo $PartyID; ?>">Ok</button>
-</form>
+<a href="viewCharacters.php"><button>Ok</button></a>
 </html>

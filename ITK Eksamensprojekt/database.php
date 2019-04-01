@@ -107,9 +107,18 @@ function createMonsterTable($conn){
         }
     }  
 }   
+function createGroup($conn,$Name,$Var){
+    $sql = "INSERT INTO AdventureDB.".$Var."Table (Name) Value('$Name')";
+    return $conn->query($sql);
+    $conn->close();
+}
+function deleteGroup($conn,$ID,$Var){
+    $sql = "DELETE FROM AdventureDB.".$Var."Table WHERE ".$Var."ID='$ID'";
+    return $conn->query($sql);
+    $conn->close();
+}
 function getName($conn,$ID,$Var){
-
-$sql = "SELECT Name FROM AdventureDB.".$Var."Table WHERE ".$Var."ID='$ID'";
+    $sql = "SELECT Name FROM AdventureDB.".$Var."Table WHERE ".$Var."ID='$ID'";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
         while($row = $result->fetch_assoc()) {
