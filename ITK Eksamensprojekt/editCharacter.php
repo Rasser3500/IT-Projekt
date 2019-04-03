@@ -3,10 +3,10 @@
 include"database.php";
 $conn=getConnection();
 $CharacterID=isset($_POST["CharacterID"])?$_POST["CharacterID"]:0;
-echo $CharacterID;
+error_reporting(E_ERROR | E_PARSE);
 $CharInfo=[][""];
 if ($CharacterID!=0){
-    $CharInfo=getCharacterInfo($conn,$CharacterID,$CharacterID,$CharInfo);
+    $CharInfo=getCharInfo($conn,$CharacterID,"Character",$CharInfo);
 }
 ?>
 <form action=" updateCharacter.php" method="post">

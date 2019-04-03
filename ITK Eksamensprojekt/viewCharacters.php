@@ -3,13 +3,12 @@
 include"database.php";
 $conn = getConnection();
 $PartyID=$_SESSION['PartyID'];
-$_SESSION['PartyID']=$PartyID;
 $PartyName=getName($conn,$PartyID,"Party");
 echo "Contract Characters to ".$PartyName."<br><br>";
-$Info = getALLCharacterInfo($conn,$PartyID);
+$Info = getALLCharInfo($conn,$PartyID,"Party");
 $boolean = false;
 for($i=1; $i<sizeof($Info)+1; $i++) {
-    if($Info[$i][0] == 0){
+    if($Info[$i][0] <= 0){
         $boolean = true;
         ?>
         <table style="background-color:#875f43;width:40%;table-layout:fixed" border="3">
@@ -30,8 +29,8 @@ for($i=1; $i<sizeof($Info)+1; $i++) {
         </table>
         <table>
             <td><form action="contract.php" method="post">
-                <input type="Hidden" name="CharacterID" value="<?php echo $i ?>">
-                <button type="submit" name="Member" value="1">Add Character</button>
+                <input type="Hidden" name="CharID" value="<?php echo $i ?>">
+                <button type="submit" name="Amount" value="1">Add Character</button>
                 </form></td>
             <td><form action="editCharacter.php" method="post">
                 <button type="submit" name="CharacterID" value="<?php echo $i ?>">Edit Character</button>
@@ -41,7 +40,7 @@ for($i=1; $i<sizeof($Info)+1; $i++) {
         <?php
     }
 }
-		if ($boolean==false){echo "There are no Characters";}
+if ($boolean==false){echo "There are no Characters";}
 ?>
 <br>
 <a href="editCharacter.php"><button>Create New Character</button></a>

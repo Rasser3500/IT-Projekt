@@ -7,5 +7,5 @@ if(createGroup($conn,$_POST["Name"],$_POST["Var"])){
 }
 ?>
 <br>
-<a href="viewParties.php"><button>Ok</button></a>
+<a href="<?php echo "view".$_POST["Var"]."s.php" ?>"><button>Ok</button></a>
 </html>

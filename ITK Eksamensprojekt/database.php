@@ -48,9 +48,10 @@ function createCharacterTable($conn){
 function createContractTable($conn){
     $sql = "CREATE TABLE AdventureDB.ContractTable (
     ContractID INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    CharacterID INT(6),
-    PartyID INT(6),
-    Member INT(1)
+    CharID INT(6) NOT NULL,
+    GroupID INT(6) NOT NULL,
+    Amount INT(6) NOT NULL,
+    Type VARCHAR(20) NOT NULL
     )";
     $cotCreated = $conn->query($sql);
     if($GLOBALS['debug']){
@@ -107,18 +108,18 @@ function createMonsterTable($conn){
         }
     }  
 }   
-function createGroup($conn,$Name,$Var){
-    $sql = "INSERT INTO AdventureDB.".$Var."Table (Name) Value('$Name')";
+function createGroup($conn,$Name,$Group){
+    $sql = "INSERT INTO AdventureDB.".$Group."Table (Name) Value('$Name')";
     return $conn->query($sql);
     $conn->close();
 }
-function deleteGroup($conn,$ID,$Var){
-    $sql = "DELETE FROM AdventureDB.".$Var."Table WHERE ".$Var."ID='$ID'";
+function deleteGroup($conn,$ID,$Group){
+    $sql = "DELETE FROM AdventureDB.".$Group."Table WHERE ".$Group."ID='$ID'";
     return $conn->query($sql);
     $conn->close();
 }
-function getName($conn,$ID,$Var){
-    $sql = "SELECT Name FROM AdventureDB.".$Var."Table WHERE ".$Var."ID='$ID'";
+function getName($conn,$ID,$String){
+    $sql = "SELECT Name FROM AdventureDB.".$String."Table WHERE ".$String."ID='$ID'";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
         while($row = $result->fetch_assoc()) {
@@ -129,41 +130,52 @@ function getName($conn,$ID,$Var){
 function getMax($conn,$Object,$Table){
     $sql = "SELECT COUNT($Object) FROM AdventureDB.$Table";
     $result = $conn->query($sql);
-    return $result->fetch_assoc(); 
+    return $result->fetch_assoc()["COUNT($Object)"];
 }
-function getALLCharacterInfo($conn,$PartyID){
-    $CharTotal=getMax($conn,"CharacterID","CharacterTable")["COUNT(CharacterID)"];
+function getALLCharInfo($conn,$GroupID,$Group){
     $CharInfo=[];
-    $CharInfo=getCharacterMembership($conn,1,$CharTotal,$PartyID,$CharInfo);
-    $CharInfo=getCharacterInfo($conn,1,$CharTotal,$CharInfo);
-    return $CharInfo;
-}
-function getCharacterMembership($conn,$Start,$Max,$PartyID,$CharInfo){
-    for($i=$Start; $i<$Max+1; $i++) {
-        $y=0;
-        $sql = "SELECT Member FROM AdventureDB.ContractTable WHERE PartyID = '$PartyID' AND CharacterID = '$i'";
-        $result = $conn->query($sql);
-        if ($result->num_rows > 0) {
-            while($row = $result->fetch_assoc()) {
-                if($row["Member"]==1){ $y=$y+1; }
-                else{ $y=$y-1; }
-            }
-        }
-        $CharInfo[$i][0]=$y;
+    if ($Group=="Party"){$Char="Character";}
+    if ($Group=="Encounter"){$Char="Monster";}
+    $CharTotal=getMax($conn,$Char."ID",$Char."Table");
+    for($i=1; $i<$CharTotal+1; $i++){
+        $CharInfo[$i][0]=getAmount($conn,$i,$GroupID,$Group);
+        $CharInfo=getCharInfo($conn,$i,$Char,$CharInfo);    
     }
     return $CharInfo;
 }
-function getCharacterInfo($conn,$Start,$Max,$CharInfo){
-    for($i=$Start; $i<$Max+1; $i++){
-        $sql = "SELECT Name, EXP, Lvl, Class, Race FROM AdventureDB.CharacterTable WHERE CharacterID = '$i'";
+function getAmount($conn,$ID,$GroupID,$Group){
+    $sql = "SELECT SUM(Amount) FROM AdventureDB.ContractTable WHERE GroupID = '$GroupID' AND CharID = '$ID' AND Type = '$Group'";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        while($row = $result->fetch_assoc()) {
+            return $row["SUM(Amount)"];
+        }
+    }
+}
+function getCharInfo($conn,$ID,$Char,$CharInfo){
+    if ($Char=="Character"){
+        $sql = "SELECT Name, EXP, Lvl, Class, Race FROM AdventureDB.CharacterTable WHERE CharacterID = '$ID'";
         $result = $conn->query($sql);
         if ($result->num_rows != 0) {
             while($row = $result->fetch_assoc()) {
-                $CharInfo[$i][1]=$row["Name"];
-                $CharInfo[$i][2]=$row["EXP"];
-                $CharInfo[$i][3]=$row["Lvl"];
-                $CharInfo[$i][4]=$row["Class"];
-                $CharInfo[$i][5]=$row["Race"];
+                $CharInfo[$ID][1]=$row["Name"];
+                $CharInfo[$ID][2]=$row["EXP"];
+                $CharInfo[$ID][3]=$row["Lvl"];
+                $CharInfo[$ID][4]=$row["Class"];
+                $CharInfo[$ID][5]=$row["Race"];
+            }
+        }
+    }
+    if ($Char=="Monster"){
+        $sql = "SELECT Name, Size, Cr, Alignment, Type FROM AdventureDB.MonsterTable WHERE MonsterID = '$ID'";
+        $result = $conn->query($sql);
+        if ($result->num_rows != 0) {
+            while($row = $result->fetch_assoc()) {
+                $CharInfo[$ID][1]=$row["Name"];
+                $CharInfo[$ID][2]=$row["Size"];
+                $CharInfo[$ID][3]=$row["Cr"];
+                $CharInfo[$ID][4]=$row["Alignment"];
+                $CharInfo[$ID][5]=$row["Type"];
             }
         }
     }
@@ -176,6 +188,16 @@ function updateCharacter($conn,$CharacterID,$Name,$EXP,$Lvl,$Class,$Race){
 }
 function createCharacter($conn,$Name,$EXP,$Lvl,$Class,$Race){
     $sql = "INSERT INTO AdventureDB.CharacterTable (Name, EXP, Lvl, Class, Race) Value('$Name', '$EXP', '$Lvl', '$Class', '$Race')";
+    return $conn->query($sql);
+    $conn->close();
+}
+function updateMonster($conn,$MonsterID,$Name,$Size,$Cr,$Alignment,$Type){
+    $sql = "UPDATE AdventureDB.MonsterTable SET Name = '$Name', Size = '$Size', Cr = '$Cr', Alignment = '$Alignment', Type = '$Type' WHERE MonsterID='$MonsterID'";
+    return $conn->query($sql);
+    $conn->close();
+}
+function createMonster($conn,$Name,$Size,$Cr,$Alignment,$Type){
+    $sql = "INSERT INTO AdventureDB.MonsterTable (Name, Size, Cr, Alignment, Type) Value('$Name', '$Size', '$Cr', '$Alignment', '$Type')";
     return $conn->query($sql);
     $conn->close();
 }
