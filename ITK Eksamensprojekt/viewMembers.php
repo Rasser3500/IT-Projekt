@@ -19,7 +19,7 @@ for($i=1; $i<sizeof($Info)+1; $i++) {
         ?>
         <form action="contract.php" method="post">
             <input type="Hidden" name="CharID" value="<?php echo $i ?>">
-            <input type="hidden" name="home" value="true">
+            <input type="hidden" name="Home" value="True">
             <button type="submit" name="Amount" value="1">Remove from Party</button>
         </form>
         <form action="editCharacter.php" method="post">
