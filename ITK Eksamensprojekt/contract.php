@@ -11,6 +11,7 @@ $CharID = $_POST["CharID"];
 if ($Home=="True"){$Amount*=-1;}
 $GroupName=getName($conn,$GroupID,$Group);
 $CharName=getName($conn,$CharID,$Char);
+if ($Amount>1 || $Amount<-1){$CharName.="s";}
 if ($Amount>0){$string="joined";}
 else {$string="left";}   
 $sql = "INSERT INTO AdventureDB.ContractTable (GroupID, CharID, Amount, Type) Value('$GroupID', '$CharID', '$Amount', '$Group')";

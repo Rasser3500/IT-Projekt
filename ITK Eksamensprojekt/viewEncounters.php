@@ -27,5 +27,5 @@ if ($result->num_rows > 0) {
 <form action="newGroup.php" method="post">     
     <button type="submit" name="Var" value="Encounter">Create Encounter</button>
 </form>
-<br><a href="homePage.php"><button>Back</button></a>
+<a href="homePage.php"><button>Back</button></a>
 </html>

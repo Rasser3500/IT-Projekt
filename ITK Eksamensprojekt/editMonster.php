@@ -4,26 +4,27 @@ include"database.php";
 $conn=getConnection();
 $MonsterID=isset($_POST["MonsterID"])?$_POST["MonsterID"]:0;
 error_reporting(E_ERROR | E_PARSE);
-$CharInfo=[][""];
+$Info=[][""];
 if ($MonsterID!=0){
-    $CharInfo=getCharInfo($conn,$MonsterID,"Monster",$CharInfo);
+    $Info[1][0]=$MonsterID;
+    $Info=getMonsterInfo($conn,1,$Info);
 }
 ?>
 <form action=" updateMonster.php" method="post">
     Name:<br>
-    <input type="text" name="Name" value="<?php echo $CharInfo[$MonsterID][1]; ?>">
+    <input type="text" name="Name" value="<?php echo $Info[1][2]; ?>">
     <br>
     Size:<br>
-    <input type="text" name="Size" value="<?php echo $CharInfo[$MonsterID][2]; ?>">
+    <input type="text" name="Size" value="<?php echo $Info[1][3]; ?>">
     <br>
     Cr:<br>
-    <input type="text" name="Cr" value="<?php echo $CharInfo[$MonsterID][3]; ?>">
+    <input type="text" name="Cr" value="<?php echo $Info[1][4]; ?>">
     <br>
     Alignment:<br>
-    <input type="text" name="Alignment" value="<?php echo $CharInfo[$MonsterID][4]; ?>">
+    <input type="text" name="Alignment" value="<?php echo $Info[1][5]; ?>">
     <br>
     Type:<br>
-    <input type="text" name="Type" value="<?php echo $CharInfo[$MonsterID][5]; ?>">
+    <input type="text" name="Type" value="<?php echo $Info[1][6]; ?>">
     <br>
     <button type="submit" name="MonsterID" value="<?php echo $MonsterID ?>">Next</button>
 </form>
