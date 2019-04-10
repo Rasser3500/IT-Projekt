@@ -32,7 +32,6 @@ function createCharacterTable($conn){
     $sql = "CREATE TABLE AdventureDB.CharacterTable (
     CharacterID INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     Name VARCHAR(60) NOT NULL,
-    Lvl INT(2) NOT NULL,
     EXP int(10),
     Class VARCHAR(20) NOT NULL,
     Race VARCHAR(20) NOT NULL
@@ -119,13 +118,13 @@ function deleteGroup($conn,$ID,$Group){
     return $conn->query($sql);
     $conn->close();
 }
-function updateCharacter($conn,$CharacterID,$Name,$EXP,$Lvl,$Class,$Race){
-    $sql = "UPDATE AdventureDB.CharacterTable SET Name = '$Name', EXP = '$EXP', Lvl = '$Lvl', Class = '$Class', Race = '$Race' WHERE CharacterID='$CharacterID'";
+function updateCharacter($conn,$CharacterID,$Name,$EXP,$Class,$Race){
+    $sql = "UPDATE AdventureDB.CharacterTable SET Name = '$Name', EXP = '$EXP', Class = '$Class', Race = '$Race' WHERE CharacterID='$CharacterID'";
     return $conn->query($sql);
     $conn->close();
 }
-function createCharacter($conn,$Name,$EXP,$Lvl,$Class,$Race){
-    $sql = "INSERT INTO AdventureDB.CharacterTable (Name, EXP, Lvl, Class, Race) Value('$Name', '$EXP', '$Lvl', '$Class', '$Race')";
+function createCharacter($conn,$Name,$EXP,$Class,$Race){
+    $sql = "INSERT INTO AdventureDB.CharacterTable (Name, EXP, Class, Race) Value('$Name', '$EXP', '$Class', '$Race')";
     return $conn->query($sql);
     $conn->close();
 }
@@ -177,13 +176,13 @@ function getAmount($conn,$ID,$GroupID,$Group){
 }
 function getCharacterInfo($conn,$i,$CharInfo){
     $ID=$CharInfo[$i][0];
-    $sql = "SELECT Name, EXP, Lvl, Class, Race FROM AdventureDB.CharacterTable WHERE CharacterID = '$ID'";
+    $sql = "SELECT Name, EXP, Class, Race FROM AdventureDB.CharacterTable WHERE CharacterID = '$ID'";
     $result = $conn->query($sql);
     if ($result->num_rows != 0) {
         while($row = $result->fetch_assoc()) {
             $CharInfo[$i][2]=$row["Name"];
-            $CharInfo[$i][3]=$row["EXP"];
-            $CharInfo[$i][4]=$row["Lvl"];
+            $CharInfo[$i][3]=getCharLvl($row["EXP"]);
+            $CharInfo[$i][4]=$row["EXP"];
             $CharInfo[$i][5]=$row["Class"];
             $CharInfo[$i][6]=$row["Race"];
         }
@@ -227,6 +226,17 @@ function getExp($Cr){
     if($Cr>=26){$exp+=2000*($Cr-25);}
     if($Cr==30){$exp+=5000;}
     return $exp;
+}
+function getCharLvl($Exp){            
+$Advancement=array(0,300,1200,3900,10400,24400,47400,81400,129400,193400,278400,378400,498400,638400,803400,998400,1223400,1488400,1793400,2148400);
+    for ($i=0; $i<sizeof($Advancement); $i++){
+        if($Exp < $Advancement[$i]){return $i;}
+    }
+}
+function getCharExp($Lvl){
+$Advancement=array(0,300,1200,3900,10400,24400,47400,81400,129400,193400,278400,378400,498400,638400,803400,998400,1223400,1488400,1793400,2148400);
+     return $Advancement[$Lvl-1];
+    
 }
 function getMulti($Amount){
     $Multi=1;

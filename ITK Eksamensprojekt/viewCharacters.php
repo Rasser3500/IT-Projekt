@@ -18,15 +18,15 @@ for($i=1; $i<sizeof($Info)+1; $i++) {
         <table style="background-color:#875f43;width:40%;table-layout:fixed" border="3">
             <tr>
                 <th>Name</th>
-                <th>EXP</th>
                 <th>Lvl</th>
+                <th>Exp</th>
                 <th>Class</th>
                 <th>Race</th>
             </tr>
             <tr>
                 <td><?php echo $Info[$i][2];?></td>
                 <td><?php echo $Info[$i][3];?></td>
-                <td><?php echo $Info[$i][4];?></td>
+                <td><?php echo $Info[$i][4]-getCharExp($Info[$i][3]);?></td>
                 <td><?php echo $Info[$i][5];?></td>
                 <td><?php echo $Info[$i][6];?></td>
             </tr>

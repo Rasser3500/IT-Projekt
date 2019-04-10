@@ -14,11 +14,11 @@ if ($CharacterID!=0){
     Name:<br>
     <input type="text" name="Name" value="<?php echo $Info[1][2]; ?>">
     <br>
-    EXP:<br>
-    <input type="text" name="EXP" value="<?php echo $Info[1][3]; ?>">
-    <br>
     Lvl:<br>
-    <input type="text" name="Lvl" value="<?php echo $Info[1][4]; ?>">
+    <input type="text" name="Lvl" value="<?php echo $Info[1][3]; ?>">
+    <br>
+    Exp:<br>
+    <input type="text" name="EXP" value="<?php echo $Info[1][4]-getCharExp($Info[1][3]); ?>">
     <br>
     Class:<br>
     <input type="text" name="Class" value="<?php echo $Info[1][5]; ?>">
