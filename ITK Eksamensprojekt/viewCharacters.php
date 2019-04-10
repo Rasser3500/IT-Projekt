@@ -1,4 +1,6 @@
 <html>
+<link rel="stylesheet" type="text/css" href="stylesheet.css" />
+<h1>
 <?php
 include"database.php";
 $conn = getConnection();
@@ -10,12 +12,17 @@ for($i=1; $i<sizeof($Info)+1; $i++){
         $Info[$i][1]=getAmount($conn,$Info[$i][0],$PartyID,"Party");
         $Info=getCharacterInfo($conn,$i,$Info);    
 }
+?>
+	</h1>
+<a href="viewMembers.php"><button>Back</button></a>
+<br><br>
+<?php
 $boolean = false;
 for($i=1; $i<sizeof($Info)+1; $i++) {
     if($Info[$i][1] <= 0){
         $boolean = true;
         ?>
-        <table style="background-color:#875f43;width:40%;table-layout:fixed" border="3">
+        <table style="background-color:#a08f70;width:40%;table-layout:fixed" border="3">
             <tr>
                 <th>Name</th>
                 <th>Lvl</th>
@@ -31,25 +38,24 @@ for($i=1; $i<sizeof($Info)+1; $i++) {
                 <td><?php echo $Info[$i][6];?></td>
             </tr>
         </table>
-        <table>
-            <td><form action="contract.php" method="post">
+            <form action="contract.php" method="post">
                 <input type="Hidden" name="CharID" value="<?php echo $Info[$i][0] ?>">
                 <button type="submit" name="Amount" value="1">Add Character</button>
-            </form></td>
-            <td><form action="editCharacter.php" method="post">
+            </form>
+            <form action="editCharacter.php" method="post">
                 <button type="submit" name="CharacterID" value="<?php echo $Info[$i][0] ?>">Edit Character</button>
-            </form></td>
-            <td><form action="deleteGroup.php" method="post">
+            </form>
+            <form action="deleteGroup.php" method="post">
                 <input type="Hidden" name="Var" value="Character">
                 <button type="submit" name="ID" value="<?php echo $Info[$i][0]; ?>">Delete Character</button>
-            </form></td>
-	    </table>
+	</form>
+	<br>
+	<br>
         <?php
     }
 }
 if ($boolean==false){echo "There are no Characters";}
 ?>
 <a href="editCharacter.php"><button>Create New Character</button></a>
-<br><br>
 <a href="viewMembers.php"><button>Back</button></a>
 </html>

@@ -1,0 +1,30 @@
+body {
+	background-color: bisque;
+}
+
+h1 {
+	color: #3d3d3d;
+	font-size: 32;
+	border-bottom: 2mm solid;
+	border-bottom-color: #930a0a;
+}
+table,th,td {
+	background-color: lightgray;
+	width:40%;
+	table-layout: fixed;
+	border: 3px ridge grey;
+}
+button {
+  background-color: #930a0a;
+  border: 1px ridge black;
+  color: white;
+  padding: 6px 4px;
+  text-align: center;
+  text-decoration: none;
+  display: inline;
+  font-size: 16px;
+}
+
+form {
+	display: inline;
+}
