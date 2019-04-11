@@ -1,4 +1,7 @@
 <html>
+<!-- der bliver refreret til stylesheetet-->
+<link rel="stylesheet" type="text/css" href="stylesheet.css" />
+<h1>
 <?php
 //inkludere databasens funktioner og for connection
 include"database.php";
@@ -7,7 +10,7 @@ $conn = getConnection();
 $EncounterID=isset($_POST['EncounterID'])?$_POST['EncounterID']:$_SESSION['EncounterID'];
 $_SESSION['EncounterID']=$EncounterID;
 //finder navnet til EncounterIDet og skriver det
-echo "Minions of ".getName($conn,$EncounterID,"Encounter")."<br>";
+echo "Minions of ".getName($conn,$EncounterID,"Encounter")."</h1>";
 //laver to inter og sætter dem til 0
 $AmountTotal=0;
 $ExpTotal=0;
@@ -24,7 +27,7 @@ for($i=1; $i<sizeof($Info)+1; $i++){
     $ExpTotal+=$Info[$i][7]*$Info[$i][1];
 }
 //finder den aktuelle exp ved at gange den totale exp med multiplieren fundet ved hjælp af den totale mængde monstre i encounteret
-echo "Total exp of encounter: ".$ExpTotal*getMulti($AmountTotal)." <br><br>";
+echo "<h2>Total exp of encounter: ".$ExpTotal*getMulti($AmountTotal)."</h2><br>";
 //laver en varianble som sætter den lig falsk
 $boolean = false;
 //kører et forloop udfra mængden af MonsterIDer
@@ -73,7 +76,7 @@ for($i=1; $i<sizeof($Info)+1; $i++) {
     }
 }
 //Hvis booleanen ikke blev sat sandt, bliver skrevet der ikke var nogle monstre
-if ($boolean==false){echo "There are no Monsters";}
+if ($boolean==false){echo "There are no Monsters<br>";}
 //der bliver lavet knaper til at se monsterne, og til at gå tilbage til at se Encounterne
 ?>
 <a href="viewMonsters.php"><button>Contract Monsters</button></a>

@@ -1,14 +1,18 @@
 <html>
 <!-- der bliver refreret til stylesheetet-->
 <link rel="stylesheet" type="text/css" href="stylesheet.css" />
+<h1>
 <?php
 //inkludere databasens funktioner og får connection samt EncounterIDet fra sessionen
 include"database.php";
 $conn = getConnection();
 $EncounterID=$_SESSION['EncounterID'];
 //Navnet til EncounterIDet bliver fundet og skrevet
-echo "Contract Monsters to ".getName($conn,$EncounterID,"Encounter")."<br><br>";
+echo "Contract Monsters to ".getName($conn,$EncounterID,"Encounter")."</h1><br>";
 //finder alle MonsterIDerne og sætter dem i et array, hvor de kan findes som den 0'de information til et nummeret
+?>
+<a href="viewEncounters.php"><button>Back</button></a><br><br>
+<?php
 $Info=getID($conn,"Monster");
 //kører et forloop udfra hvormange MonsterIDer der blev fundet. 
 for($i=1; $i<sizeof($Info)+1; $i++){
@@ -59,10 +63,11 @@ for($i=1; $i<sizeof($Info)+1; $i++) {
             <button type="submit" name="ID" value="<?php echo $Info[$i][0]; ?>">Delete Monster</button>
         </form></td>
 	</table>
+	<br>
     <?php
 }
 //Hvis booleanen ikke blev sat sandt, bliver skrevet der ikke var nogle monstre
-if ($boolean==false){echo "There are no Monsters";}
+if ($boolean==false){echo "There are no Monsters<br>";}
 //der bliver lavet knaper til lave nye monstre, og til at gå tilbage til at se Minions
 ?>
 <a href="editMonster.php"><button>Create New Monster</button></a>

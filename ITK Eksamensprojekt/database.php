@@ -21,7 +21,7 @@ function createAll($conn){
 }
 //laver connectionen og retunerer den.
 function getConnection(){
-    $conn = new mysqli("localhost", "root", "root");
+    $conn = new mysqli("localhost:3301", "root", "root");
     return $conn;
 }
 //laver databasen ud fra connectionen

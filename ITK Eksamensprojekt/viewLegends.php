@@ -1,4 +1,6 @@
 <html>
+<!-- der bliver refreret til stylesheetet-->
+<link rel="stylesheet" type="text/css" href="stylesheet.css" />
 <?php
 //inkludere databasens funktioner og for connection
 include"database.php";

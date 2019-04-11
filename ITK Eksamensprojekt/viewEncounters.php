@@ -1,4 +1,7 @@
 <html>
+<!-- der bliver refreret til stylesheetet-->
+<link rel="stylesheet" type="text/css" href="stylesheet.css" />
+<h1>
 <?php
 //inkludere databasens funktioner og får connection
 include"database.php";
@@ -7,13 +10,13 @@ $conn = getConnection();
 $_SESSION['EncounterID']=0;
 $_SESSION['PartyID']=isset($_POST['PartyID'])?$_POST['PartyID']:$_SESSION['PartyID'];
 //skriver titlen til siden
-echo "List of Encounters<br><br>";
+echo "List of Encounters</h1><br>";
 //finder alle EncounterIDerne og sætter dem i et array, hvor de kan findes som den 0'de information til et nummeret
 $GroupInfo=getID($conn,"Encounter");
 //kører et forloop udfra hvormange EncounterIDer der blev fundet.
 for($i=1; $i<sizeof($GroupInfo)+1; $i++){
     //skriver det tilhørende navn til EncounterIdet vedhjælp af getName funktionen 
-    echo getName($conn,$GroupInfo[$i][0],"Encounter")."<br>";
+    echo "<h2>".getName($conn,$GroupInfo[$i][0],"Encounter")."</h2>";
     //laver to inter og sætter dem til 0
     $AmountTotal=0;
     $ExpTotal=0;
@@ -61,7 +64,7 @@ for($i=1; $i<sizeof($GroupInfo)+1; $i++){
     
 }
 ?>
-<br>
+<br><br><br>
 <!--laver en knap til at submit stringen "Encounter" til newGroup siden-->
 <form action="newGroup.php" method="post">     
     <button type="submit" name="Var" value="Encounter">Create Encounter</button>

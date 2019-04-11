@@ -9,7 +9,7 @@ include"database.php";
 $conn = getConnection();
 $PartyID=$_SESSION['PartyID'];
 //Navnet til partyIDet bliver fundet og skrevet
-echo "Contract Characters to ".getName($conn,$PartyID,"Party")."<br><br>";
+echo "Contract Characters to ".getName($conn,$PartyID,"Party")."<br>";
 //finder alle CharacterIDerne og sætter dem i et nyt array, hvor de kan findes som den 0'de information til et nummeret
 $Info=getID($conn,"Character");
 //kører et forloop udfra hvormange CharacterIDer der blev fundet. 
@@ -72,7 +72,7 @@ for($i=1; $i<sizeof($Info)+1; $i++) {
     }
 }
 //Hvis booleanen ikke blev sat sandt, bliver skrevet der ikke var nogle charactere
-if ($boolean==false){echo "There are no Characters";}
+if ($boolean==false){echo "There are no Characters<br>";}
 //der bliver lavet knaper til at lave en nye charactere, og til at gå tilbage til at se membersne
 ?>
 <a href="editCharacter.php"><button>Create New Character</button></a>

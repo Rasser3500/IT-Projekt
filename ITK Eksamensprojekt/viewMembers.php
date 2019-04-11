@@ -1,4 +1,7 @@
 <html>
+<!-- der bliver refreret til stylesheetet-->
+<link rel="stylesheet" type="text/css" href="stylesheet.css" />
+<h1>
 <?php
 //inkludere databasens funktioner og for connection
 include"database.php";
@@ -7,7 +10,7 @@ $conn = getConnection();
 $PartyID=isset($_POST['PartyID'])?$_POST['PartyID']:$_SESSION['PartyID'];
 $_SESSION['PartyID']=$PartyID;
 //finder navnet til PartyIDet ud skriver det
-echo "Members of ".getName($conn,$PartyID,"Party")."<br><br>";
+echo "Members of ".getName($conn,$PartyID,"Party")."</h1><br>";
 //finder alle CharacterIDerne og sætter dem i et nyt array, hvor de kan findes som den 0'de information til et nummeret
 $Info=getID($conn,"Character");
 //kører et forloop udfra hvormange CharacterIDer der blev fundet. 
@@ -61,9 +64,10 @@ for($i=1; $i<sizeof($Info)+1; $i++) {
     }
 }
 //Hvis booleanen ikke blev sat sandt, bliver skrevet der ikke var nogle charactere
-if ($boolean==false){echo "There are no Characters";}
+if ($boolean==false){echo "<br>There are no Characters";}
 //der bliver lavet knaper til at se charactere, og til at gå tilbage til at se Partierne
 ?>
+<br>
 <a href="viewCharacters.php"><button>Contract Characters</button></a>
 <br><br>
 <a href="viewPartys.php"><button>Back</button></a>

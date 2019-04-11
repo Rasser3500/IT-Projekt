@@ -1,4 +1,8 @@
 <html>
+<!-- der bliver refreret til stylesheetet-->
+<link rel="stylesheet" type="text/css" href="stylesheet.css" />
+<!-- h1 startes-->
+<h1>
 <?php
 //inkludere databasens funktioner og får connection
 include"database.php";
@@ -7,14 +11,14 @@ $conn = getConnection();
 $_SESSION['PartyID']=0;
 $_SESSION['EncounterID']=isset($_POST['EncounterID'])?$_POST['EncounterID']:$_SESSION['EncounterID'];
 //skriver titlen til siden
-echo "List of Parties<br><br>";
+echo "List of Parties<br></h1>";
 //finder alle partyIDerne og sætter dem i et array, hvor de kan findes som den 0'de information til et nummeret
 $GroupInfo=getID($conn,"Party");
 //kører et forloop udfra hvormange PartyIDer der blev fundet.
 for($i=1; $i<sizeof($GroupInfo)+1; $i++){
     //skriver det tilhørende navn til partyIdet vedhjælp af getName funktionen 
-    echo getName($conn,$GroupInfo[$i][0],"Party");
-    echo "<br> Party lvls: ";
+    echo "<h2>",getName($conn,$GroupInfo[$i][0],"Party"),"</h2>";
+    echo "Party lvls: ";
     //finder alle CharacterIDerne og sætter dem i et nyt array, hvor de kan findes som den 0'de information til et nummeret
     $CharInfo=getID($conn,"Character");
     //kører et forloop udfra hvormange CharacterIDer der blev fundet.
@@ -26,6 +30,7 @@ for($i=1; $i<sizeof($GroupInfo)+1; $i++){
         //skriver characterens Lvl hvis den har en contract med partiet
         if($CharInfo[$j][1] > 0){echo $CharInfo[$j][3]." ";}
     }
+	echo"<br>";
     //laver en knap til at submit dette partyID med til lengend siden, hvis der er blevet givent et encounterID 
     if ($_SESSION['EncounterID']!=0){
         ?>
@@ -55,7 +60,7 @@ for($i=1; $i<sizeof($GroupInfo)+1; $i++){
     <?php
 }
 ?>
-<br>
+<br><br><br>
 <!--laver en knap til at submit stringen "Party" til newGroup siden-->
 <form action="newGroup.php" method="post">     
     <button type="submit" name="Var" value="Party">Create Party</button>
