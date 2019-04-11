@@ -3,9 +3,7 @@
 include"database.php";
 $conn=getConnection();
 $MonsterID=isset($_POST["MonsterID"])?$_POST["MonsterID"]:0;
-error_reporting(E_ERROR | E_PARSE);
-if($_POST["Home"]=="True"){$Char="Minion";}
-else{$Char="Monster";}
+$Home=isset($_POST["Home"])?$_POST["Home"]:"Monster";
 $Info=[][""];
 if ($MonsterID!=0){
     $Info[1][0]=$MonsterID;
@@ -28,8 +26,9 @@ if ($MonsterID!=0){
     Type:<br>
     <input type="text" name="Type" value="<?php echo $Info[1][6]; ?>">
     <br>
+    <input type="hidden" name="Home" value="<?php echo $Home; ?>" >
     <button type="submit" name="MonsterID" value="<?php echo $MonsterID ?>">Next</button>
 </form>
 <br>
-<a href="<?php echo "view".$Char."s.php" ?>"><button>Back</button></a>
+<a href="<?php echo "view".$Home."s.php" ?>"><button>Back</button></a>
 </html>

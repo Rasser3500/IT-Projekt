@@ -16,5 +16,5 @@ if ($MonsterID==0){
 
 ?>
 <br>
-<a href="viewMonsters.php"><button>Ok</button></a>
+<a href="<?php echo "view".$_POST["Home"]."s.php" ?>"><button>Ok</button></a>
 </html>

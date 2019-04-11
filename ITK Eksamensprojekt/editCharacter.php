@@ -1,16 +1,21 @@
 <html>
 <?php
+//inkludere databasens funktioner og for connection
 include"database.php";
 $conn=getConnection();
+//Henter chekker om den kan få Character IDet gennem POST, hvis ja tager den det, hvis ikke sætter den det til 0
 $CharacterID=isset($_POST["CharacterID"])?$_POST["CharacterID"]:0;
-error_reporting(E_ERROR | E_PARSE);
+//Henter chekker om den kan få Home gennem POST, hvis ja tager den det, hvis ikke sætter den det til "Character"
 $Home=isset($_POST["Home"])?$_POST["Home"]:"Character";
+//laver et array og sætter den til ikke at skrive noget
 $Info=[][""];
+//hvis der er givent et CharacterID bliver array fylt med info
 if ($CharacterID!=0){
     $Info[1][0]=$CharacterID;
     $Info=getCharacterInfo($conn,1,$Info);
 }
 ?>
+<!--laver textfælter hvor der kan skrives hvad Navn, Lvl, Exp, Class og Race skal være, hvor start værdigerne er bestemt ud fra Info arrayet, samt en knap som submiter værdigerne og CharacterIDet-->
 <form action=" updateCharacter.php" method="post">
     Name:<br>
     <input type="text" name="Name" value="<?php echo $Info[1][2]; ?>">
@@ -31,5 +36,6 @@ if ($CharacterID!=0){
     <button type="submit" name="CharacterID" value="<?php echo $CharacterID ?>">Next</button>
 </form>
 <br>
+<!--laver en knap til bage baseret på home værdien --> 
 <a href="<?php echo "view".$Home."s.php" ?>"><button>Back</button></a>
 </html>
