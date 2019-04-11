@@ -48,6 +48,7 @@ for($i=1; $i<sizeof($Info)+1; $i++) {
                 <button type="submit" name="CharID" value="<?php echo $Info[$i][0] ?>">Remove Monster</button>
             </form></td>
             <td><form action="editMonster.php" method="post">
+                <input type="hidden" name="Home" value="True">
                 <button type="submit" name="MonsterID" value="<?php echo $Info[$i][0] ?>">Edit Monster</button>
             </form></td>
         </table>

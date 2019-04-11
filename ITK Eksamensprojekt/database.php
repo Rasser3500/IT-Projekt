@@ -9,9 +9,11 @@ function createAll($conn){
     createDatabase($conn);
     createCharacterTable($conn);
     createContractTable($conn);
+    createLegendTable($conn);
     createPartyTable($conn);
     createEncounterTable($conn);
     createMonsterTable($conn);
+    if(getMax($conn,"MonsterID","MonsterTable")==0){scrapeMonster($conn);}
 }
 function getConnection(){
     $conn = new mysqli("localhost", "root", "root");
@@ -59,6 +61,21 @@ function createContractTable($conn){
             echo "<br>DEBUG:ContractTable created successfully";
         } else {
             echo "<br>DEBUG:Error creating ContractTable: " . $conn->error;
+        }
+    }  
+}
+function createLegendTable($conn){
+    $sql = "CREATE TABLE AdventureDB.LegendTable (
+    LegendID INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    PartyID INT(6) NOT NULL,
+    EncounterID INT(6) NOT NULL
+    )";
+    $ltCreated = $conn->query($sql);
+    if($GLOBALS['debug']){
+        if ($ltCreated) {
+            echo "<br>DEBUG:LegendTable created successfully";
+        } else {
+            echo "<br>DEBUG:Error creating LegendTable: " . $conn->error;
         }
     }  
 }
@@ -122,6 +139,41 @@ function updateCharacter($conn,$CharacterID,$Name,$EXP,$Class,$Race){
     $sql = "UPDATE AdventureDB.CharacterTable SET Name = '$Name', EXP = '$EXP', Class = '$Class', Race = '$Race' WHERE CharacterID='$CharacterID'";
     return $conn->query($sql);
     $conn->close();
+}
+function scrapeMonster($conn){
+    set_time_limit(1200);
+    echo "scraping...";
+    include"simple_html_dom.php";
+    $a = 0;
+    $Info = [];
+    for ($p=1;$p<71;$p++){
+        $html = file_get_html('https://www.dndbeyond.com/monsters?page='.$p);
+        foreach($html->find('div') as $divBody){
+            if($divBody->class === "listing-body"){
+                foreach($divBody->find('div') as $div){
+                    if($div->class === "info"){
+                        $n = 0;
+                        foreach($div->find('span') as $span){
+                            if($n!=2 && $n!=4 && $n!=7 && $n!=8){$Info[$a][$n]=$span->plaintext;}
+                            $n++;
+                        }
+                        $a++;
+                    }
+                }
+            }
+        }
+    }   
+    for ($i=0; $i<sizeof($Info); $i++){
+        $sql = "INSERT AdventureDB.MonsterTable(Name, Size, Cr, Alignment, Type) VALUES ('".$Info[$i][1]."','".$Info[$i][5]."','".$Info[$i][0]."','".$Info[$i][6]."','".$Info[$i][3]."')";
+        $msCreated = $conn->query($sql);
+        if($GLOBALS['debug']){
+            if ($msCreated) {
+                echo "<br>DEBUG:Monsters scraped created successfully";
+            } else {
+                echo "<br>DEBUG:Error scraping: " . $conn->error;
+            }
+        }  
+    }
 }
 function createCharacter($conn,$Name,$EXP,$Class,$Race){
     $sql = "INSERT INTO AdventureDB.CharacterTable (Name, EXP, Class, Race) Value('$Name', '$EXP', '$Class', '$Race')";
@@ -195,12 +247,12 @@ function getMonsterInfo($conn,$i,$CharInfo){
     $result = $conn->query($sql);
     if ($result->num_rows != 0) {
         while($row = $result->fetch_assoc()) {
-            $CharInfo[$ID][2]=$row["Name"];
-            $CharInfo[$ID][3]=$row["Size"];
-            $CharInfo[$ID][4]=$row["Cr"];
-            $CharInfo[$ID][5]=$row["Alignment"];
-            $CharInfo[$ID][6]=$row["Type"];
-            $CharInfo[$ID][7]=getExp($row["Cr"]);
+            $CharInfo[$i][2]=$row["Name"];
+            $CharInfo[$i][3]=$row["Size"];
+            $CharInfo[$i][4]=$row["Cr"];
+            $CharInfo[$i][5]=$row["Alignment"];
+            $CharInfo[$i][6]=$row["Type"];
+            $CharInfo[$i][7]=getExp($row["Cr"]);
         }
     }
     return $CharInfo;

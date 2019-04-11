@@ -1,4 +1,5 @@
 <html>
+<link rel="stylesheet" type="text/css" href="stylesheet.css" />
 <?php
 include"database.php";
 $conn = getConnection();
@@ -32,9 +33,10 @@ for($i=1; $i<sizeof($Info)+1; $i++) {
             <td><?php echo $Info[$i][6];?></td>
         </tr>
     </table>
-    <table>
+    
+    <table style="background-color:#a08f70;width:40%;table-layout:auto" border="3">
         <td><form action="contract.php" method="post">
-            <input type="Text" name="Amount">
+            <input type="Text" name="Amount" size="1">
             <button type="submit" name="CharID" value="<?php echo $Info[$i][0] ?>">Add Monster</button>
         </form></td>
         <td><form action="editMonster.php" method="post">

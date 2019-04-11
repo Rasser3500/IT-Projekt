@@ -4,6 +4,8 @@ include"database.php";
 $conn=getConnection();
 $MonsterID=isset($_POST["MonsterID"])?$_POST["MonsterID"]:0;
 error_reporting(E_ERROR | E_PARSE);
+if($_POST["Home"]=="True"){$Char="Minion";}
+else{$Char="Monster";}
 $Info=[][""];
 if ($MonsterID!=0){
     $Info[1][0]=$MonsterID;
@@ -29,5 +31,5 @@ if ($MonsterID!=0){
     <button type="submit" name="MonsterID" value="<?php echo $MonsterID ?>">Next</button>
 </form>
 <br>
-<a href="viewMonsters.php"><button>Back</button></a>
+<a href="<?php echo "view".$Char."s.php" ?>"><button>Back</button></a>
 </html>

@@ -4,6 +4,7 @@ include"database.php";
 $conn=getConnection();
 $CharacterID=isset($_POST["CharacterID"])?$_POST["CharacterID"]:0;
 error_reporting(E_ERROR | E_PARSE);
+$Home=isset($_POST["Home"])?$_POST["Home"]:"Character";
 $Info=[][""];
 if ($CharacterID!=0){
     $Info[1][0]=$CharacterID;
@@ -26,8 +27,9 @@ if ($CharacterID!=0){
     Race:<br>
     <input type="text" name="Race" value="<?php echo $Info[1][6]; ?>">
     <br>
+    <input type="hidden" name="Home" value="<?php echo $Home; ?>" >
     <button type="submit" name="CharacterID" value="<?php echo $CharacterID ?>">Next</button>
 </form>
 <br>
-<a href="viewCharacters.php"><button>Back</button></a>
+<a href="<?php echo "view".$Home."s.php" ?>"><button>Back</button></a>
 </html>

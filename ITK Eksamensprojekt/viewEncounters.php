@@ -3,7 +3,7 @@
 include"database.php";
 $conn = getConnection();
 $_SESSION['EncounterID']=0;
-$PartyID=isset($_POST['PartyID'])?$_POST['PartyID']:$_SESSION['PartyID'];
+$_SESSION['PartyID']=isset($_POST['PartyID'])?$_POST['PartyID']:$_SESSION['PartyID'];
 echo "List of Encounters<br><br>";
 $GroupInfo=getID($conn,"Encounter");
 for($i=1; $i<sizeof($GroupInfo)+1; $i++){
@@ -18,6 +18,20 @@ for($i=1; $i<sizeof($GroupInfo)+1; $i++){
         $ExpTotal+=$CharInfo[$j][7]*$CharInfo[$j][1];
     }
     echo "Total exp: ".$ExpTotal*getMulti($AmountTotal)." <br><br>";
+    if ($_SESSION['PartyID']!=0){
+        ?>
+        <form action="legend.php" method="post">
+            <input type="Hidden" name="Group" value="Party">
+            <button type="submit" name="EncounterID" value="<?php echo $GroupInfo[$i][0]; ?>">Fight Encounter</button>
+        </form>
+        <?php
+    }else{
+        ?>
+        <form action="viewPartys.php" method="post">     
+        <button type="submit" name="EncounterID" value="<?php echo $GroupInfo[$i][0]; ?>">Pick Party</button>
+        </form>
+        <?php
+    }
     ?>
     <form action="viewMinions.php" method="post">     
         <button type="submit" name="EncounterID" value="<?php echo $GroupInfo[$i][0]; ?>">View Minions</button>
@@ -25,8 +39,9 @@ for($i=1; $i<sizeof($GroupInfo)+1; $i++){
     <form action="deleteGroup.php" method="post">
         <input type="Hidden" name="Var" value="Encounter">
         <button type="submit" name="ID" value="<?php echo $GroupInfo[$i][0]; ?>">Delete Encounter</button>
-    </form>
+    </form> 
     <?php
+    
 }
 ?>
 <br>
